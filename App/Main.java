@@ -1,6 +1,7 @@
 package App;
 
 import Services.DbService;
+import Services.DbServicePs;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,14 +29,15 @@ public class Main {
 //        }
 //        System.out.println("new ID to: " + newID );
 
-        List<String[]> getAll = new ArrayList<>();
-        try {
-            getAll = DbService.getData(queryGetAll,null, "cinemas_ex");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        for(String[] s: getAll){
-            System.out.println(Arrays.toString(s));
-        }
+//        List<String[]> getAll = new ArrayList<>();
+//        try {
+//            getAll = DbService.getData(queryGetAll,null, "cinemas_ex");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        for(String[] s: getAll){
+//            System.out.println(Arrays.toString(s));
+//        }
+        DbServicePs.printList(DbServicePs.getData(queryGetAll,null));
     }
 }
