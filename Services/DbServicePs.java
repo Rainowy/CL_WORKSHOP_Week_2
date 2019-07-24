@@ -7,7 +7,9 @@ import java.util.List;
 
 public class DbServicePs {
 
-    private static String dbName = "cinemas_ex";
+    private static String dbName = "programming_school";
+
+    private static String createDB = "Create database `"+dbName+"` Character set utf8 collate utf8_unicode_ci";
 
     public static void executeQuery(String query, String[] params) {
         try {
@@ -37,8 +39,8 @@ public class DbServicePs {
         return data;
     }
 
-    public static void printList(List<String[]> list){
-        for(String[] s: list){
+    public static void printList(List<String[]> list) {
+        for (String[] s : list) {
             System.out.println(Arrays.toString(s));
         }
     }
