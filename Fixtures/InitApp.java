@@ -1,5 +1,9 @@
 package Fixtures;
 
+import Entity.Users;
+import Services.DbService;
+import Services.DbServicePs;
+
 public class InitApp {
 
     private static String queryCreateUsers =
@@ -10,7 +14,7 @@ public class InitApp {
                     "password varchar (255)," +
                     "user_group_id int," +
                     "primary key (id)," +
-                    "foreign key (user_group_id) references user_group (id))" +
+                    "foreign key (user_group_id) references user_group (id)" +
                     ");";
 
     private static String queryCreateUser_Group =
@@ -35,15 +39,33 @@ public class InitApp {
                     "updated DATETIME," +
                     "description text," +
                     "exercise_id int," +
-                    "users_id BIGINT," +
+                    "users_id int," +
                     "primary key (id)," +
                     "foreign key (exercise_id) references exercise (id)," +
                     "foreign key (users_id) references users (id)" +
                     ");";
 
 
+    public static void createTables(String query) {
+        DbServicePs.executeQuery(query, null);
+    }
 
+    public static void insertIntoUser_Group() {
+        String query = "insert into user_group values (null,'Admin'),(null,'User')";
+        //String[]params = {"Admin"};
+        DbServicePs.executeQuery(query, null);
+    }
 
+    public static void main(String[] args) {
+
+        // DbServicePs.createDb();
+        //createTables(queryCreateUsers);
+        //createTables(queryCreateUser_Group);
+        // createTables(queryCreateExercise);
+        //createTables(queryCreateSolution);
+        insertIntoUser_Group();
+
+    }
 
 
 }

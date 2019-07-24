@@ -11,6 +11,15 @@ public class DbServicePs {
 
     private static String createDB = "Create database `"+dbName+"` Character set utf8 collate utf8_unicode_ci";
 
+    public static void createDb(){
+
+        try {
+            DbService.executeQuery(createDB,null,"");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void executeQuery(String query, String[] params) {
         try {
             DbService.executeQuery(query, params, dbName);
