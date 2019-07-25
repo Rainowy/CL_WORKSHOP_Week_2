@@ -1,5 +1,9 @@
 package App;
 
+import Dao.UserDao;
+import Dao.UserGroupDao;
+import Entity.UserGroup;
+import Entity.Users;
 import Services.DbService;
 import Services.DbServicePs;
 
@@ -10,34 +14,50 @@ import java.util.List;
 
 public class Main {
 
-    private static String queryInsertIntoAddress = "insert into tickets (`quantity`,`price`,`name`) values (?,?,?);";
-    private static String queryGetAll = "select * from tickets;";
+
 
 
     public static void main(String[] args) {
 
-//        String [] params = new String[3];
-//        params[0] = "79";
-//        params[1] = "2.8";
-//        params[2] = "KONTEMPLACJA";
+//        Users firstUser = new Users();
+//        firstUser.setUserName("tomek");
+//        firstUser.setEmail("tomek@gmail.com");
+//        firstUser.setPassword("sabaka");
+//        firstUser.setUserGroup(UserGroupDao.getById(1));
+//        UserDao.save(firstUser);
 
-//        int newID =0;
-//        try {
-//           newID = DbService.executeInsert(queryInsertIntoAddress, params, "cinemas_ex");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("new ID to: " + newID );
+//        System.out.println(UserGroupDao.getByName("Admin"));
+//        System.out.println(UserGroupDao.getById(2));
+//        Users byId = UserDao.getById(1);
+//        byId.setUserName("kropek");
+//        byId.setEmail("sygfds@o2");
+//        byId.setPassword("gfsdf7843");
+//        byId.setUserGroup(UserGroupDao.getByName("User"));
+//        UserDao.save(byId);
 
-//        List<String[]> getAll = new ArrayList<>();
-//        try {
-//            getAll = DbService.getData(queryGetAll,null, "cinemas_ex");
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        for(String[] s: getAll){
-//            System.out.println(Arrays.toString(s));
-//        }
-        DbServicePs.printList(DbServicePs.getData(queryGetAll,null));
+//        Users byId = UserDao.getById(2);
+//        System.out.println(byId);
+
+//        Users firstUser = new Users();
+//        firstUser.setUserName("patafian");
+//        firstUser.setEmail("tomekono@gmail.com");
+//        firstUser.setPassword("chrono");
+//        firstUser.setUserGroup(UserGroupDao.getById(1));
+//        UserDao.save(firstUser);
+
+//        Users byId = UserDao.getById(6);
+//        byId.setEmail("zmiana maila");
+//        UserDao.save(byId);
+//        System.out.println(UserDao.getByUserName("kropek"));
+//
+//        System.out.println(UserDao.getByUserName("paweł"));
+//        UserDao.delete(UserDao.getByUserName("paweł"));
+        //UserDao.delete(3);
+
+        List<Users> all = UserDao.getAll();
+
+        for(Users u : all){
+            System.out.println(u);
+        }
     }
 }

@@ -52,7 +52,6 @@ public class InitApp {
 
     public static void insertIntoUser_Group() {
         String query = "insert into user_group values (null,'Admin'),(null,'User')";
-        //String[]params = {"Admin"};
         DbServicePs.executeQuery(query, null);
     }
 
