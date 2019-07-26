@@ -96,7 +96,5 @@ public class UserDao {
             return result;
         }
         return null;
-
-
     }
 }

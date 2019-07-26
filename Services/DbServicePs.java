@@ -1,5 +1,7 @@
 package Services;
 
+import Entity.UserGroup;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,12 +11,12 @@ public class DbServicePs {
 
     private static String dbName = "programming_school";
 
-    private static String createDB = "Create database `"+dbName+"` Character set utf8 collate utf8_unicode_ci";
+    private static String createDB = "Create database `" + dbName + "` Character set utf8 collate utf8_unicode_ci";
 
-    public static void createDb(){
+    public static void createDb() {
 
         try {
-            DbService.executeQuery(createDB,null,"");
+            DbService.executeQuery(createDB, null, "");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,6 +53,12 @@ public class DbServicePs {
     public static void printList(List<String[]> list) {
         for (String[] s : list) {
             System.out.println(Arrays.toString(s));
+        }
+    }
+
+    public static void printUserGroupList(List<UserGroup> list) {
+        for (UserGroup u : list) {
+            System.out.println(u);
         }
     }
 }
