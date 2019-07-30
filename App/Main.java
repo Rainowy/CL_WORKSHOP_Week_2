@@ -10,7 +10,7 @@ import Entity.UserGroup;
 import Entity.Users;
 import Services.DbService;
 import Services.DbServicePs;
-import org.joda.time.DateTime;
+
 
 import java.sql.SQLException;
 import java.sql.Time;
@@ -196,23 +196,23 @@ public class Main {
 //        Solution byId = SolutionDao.getById(5);
 //        System.out.println(byId);
 
-        List<Solution> all = SolutionDao.getAll();
-        for (Solution s: all){
-            System.out.println(s);
-        }
+//        List<Solution> all = SolutionDao.getAll();
+//        for (Solution s: all){
+//            System.out.println(s);
+//        }
 
         //next timestamp;
-        String dateTime = "2011-02-22 14:30:00";
-
-        Timestamp date = Timestamp.valueOf(dateTime);
-        Timestamp current = new Timestamp(date.getTime());
-
-        Solution solution2 = new Solution();
-        solution2.setCreated(date);
-        solution2.setUpdated(date);
-        solution2.setDescription("very nice solution");
-        solution2.setExercise(ExerciseDao.getById(6));
-        solution2.setUsers(UserDao.getById(4));
+//        String dateTime = "2018-05-22 14:30:00";
+//
+//        Timestamp date = Timestamp.valueOf(dateTime);
+//        Timestamp current = new Timestamp(date.getTime());
+//
+//        Solution solution2 = new Solution();
+//        solution2.setCreated(date);
+//        solution2.setUpdated(current);
+//        solution2.setDescription("password sollution");
+//        solution2.setExercise(ExerciseDao.getById(6));
+//        solution2.setUsers(UserDao.getById(4));
 
 //        for (int i = 1; i <=all.size() ; i++) {
 //            if(ExerciseDao.getById(i) != null){
@@ -226,7 +226,14 @@ public class Main {
 //                break;
 //            }
 //        }
-        SolutionDao.save(solution2);
+      //  SolutionDao.save(solution2);
+        Users currentUser = new Users();
+        currentUser.setId(10);
+        currentUser.setUserName("ainowy");
+        currentUser.setEmail("hetman@gmail.com");
+        currentUser.setPassword("kasiaczek");
+        currentUser.setUserGroup(UserGroupDao.getById(2));
+        UserDao.save(currentUser);
 
 
     }

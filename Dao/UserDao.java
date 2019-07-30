@@ -2,9 +2,11 @@ package Dao;
 
 import Entity.Users;
 import Services.DbServicePs;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserDao {
 
@@ -12,30 +14,42 @@ public class UserDao {
         if (users.getId() == 0) {
             addToDB(users);
         } else {
-            updateInDb(users);
+            try {
+                updateInDb(users);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
     private static void addToDB(Users users) {
         String query = "insert into users values(null,?,?,?,?);";
         String[] params = new String[4];
         params[0] = users.getUserName();
         params[1] = users.getEmail();
-        params[2] = users.getPassword();
+        params[2] = hashPsw(users);
         params[3] = String.valueOf(users.getUserGroup().getId());
         int newId = DbServicePs.executeInsert(query, params);
         users.setId(newId);
     }
 
-    private static void updateInDb(Users users) {
+    private static void updateInDb(Users users) throws Exception {
         String query = "update users set username =?,email=?,password=?,user_group_id=? where id =?;";
         String[] params = new String[5];
         params[0] = users.getUserName();
         params[1] = users.getEmail();
-        params[2] = users.getPassword();
+
+        if (!checkPsw(users)) {
+            throw new Exception("WRONG PASSWORD");
+        } else {
+            params[2] = setNewPsw();
+        }
+
         params[3] = String.valueOf(users.getUserGroup().getId());
         params[4] = String.valueOf(users.getId());
         DbServicePs.executeQuery(query, params);
     }
+
     public static Users getById(int id) {
         String query = "select * from users where id =?;";
         String[] params = {String.valueOf(id)};
@@ -96,5 +110,37 @@ public class UserDao {
             return result;
         }
         return null;
+    }
+    private static String setNewPsw(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter new Password");
+        String password = scan.next();
+        return hashPsw(password);
+    }
+
+    private static String hashPsw(String password) {
+        // Hash a password for the next time
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        return hashed;
+    }
+
+    private static String hashPsw(Users user) {
+        String password = user.getPassword();
+        // Hash a password for the first time
+        String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
+        return hashed;
+    }
+
+    private static boolean checkPsw(Users user) {
+        String query = "select password from users where id = ?;";
+        String[] params = {String.valueOf(user.getId())};
+        List<String[]> result = DbServicePs.getData(query, params);
+        String[] password = result.get(0);
+
+        if (BCrypt.checkpw(user.getPassword(), password[0])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
