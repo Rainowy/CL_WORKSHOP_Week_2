@@ -61,7 +61,8 @@ public class Solution {
 
     @Override
     public String toString() {
-        return "created=" + created +
+        return"id=" + id +
+                "created=" + created +
                 ", updated=" + updated +
                 ", description='" + description + '\'' +
                 ", exercise=" + exercise +

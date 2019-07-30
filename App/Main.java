@@ -13,6 +13,8 @@ import Services.DbServicePs;
 import org.joda.time.DateTime;
 
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -122,13 +124,13 @@ public class Main {
 //        Exercise exercise = ExerciseDao.getById(5);
 //        Users user = UserDao.getById(4);
 
-        String createdDate = "1982-03-16 23:37:50";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2018, Calendar.MARCH,1,12,35,43);
-        Date calDate = calendar.getTime();
-        java.sql.Timestamp date3 = new java.sql.Timestamp(calDate.getTime());
+//        String createdDate = "1982-03-16 23:37:50";
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(2018, Calendar.MARCH,1,12,35,43);
+//        Date calDate = calendar.getTime();
+//        java.sql.Timestamp date3 = new java.sql.Timestamp(calDate.getTime());
 
 //        DateTime toInsert = new DateTime(createdDate);
 //        System.out.println(toInsert);
@@ -157,7 +159,75 @@ public class Main {
 //        solution.setUsers(user);
 //        SolutionDao.save(solution);
 
-        SolutionDao.getById(1);
+//        String dateToInsert = "2016-05-21 15:15:00";
+//        Timestamp timestampToInsert = Timestamp.valueOf(dateToInsert);
+//
+//        Solution byId = SolutionDao.getById(1);
+//        //System.out.println(byId);
+//        byId.setDescription("no ja nie wiem czemu gówno śmierdzi");
+//        byId.setUpdated(timestampToInsert);
+//        byId.setExercise(ExerciseDao.getById(4));
+//        byId.setUsers(UserDao.getById(6));
+//       // SolutionDao.save(byId);
+//
+//        String str = "1986-11-21 19:21:45";
+//        Timestamp strToDate = Timestamp.valueOf(str);
+//        String str2 = "";
+//        if(str.contains("1986")){
+//            str2 = "1926-11-21 19:21:45";
+//        }
+//        Timestamp str2ToDate = Timestamp.valueOf(str2);
+//
+
+
+//        Solution solution2 = new Solution();
+//        solution2.setCreated(strToDate);
+//        solution2.setUpdated(str2ToDate);
+//        solution2.setDescription("nie ma chuja we wsi");
+//        solution2.setExercise(ExerciseDao.getById(6));
+//        solution2.setUsers(UserDao.getById(4));
+      //  SolutionDao.save(solution2);
+
+       // Solution chuj = SolutionDao.getById(1);
+       //SolutionDao.delete(3);
+       // System.out.println(SolutionDao.getById(5));
+      //  SolutionDao.getByname("wiem");
+        //System.out.println(SolutionDao.getByname("Solution"));
+//        Solution byId = SolutionDao.getById(5);
+//        System.out.println(byId);
+
+        List<Solution> all = SolutionDao.getAll();
+        for (Solution s: all){
+            System.out.println(s);
+        }
+
+        //next timestamp;
+        String dateTime = "2011-02-22 14:30:00";
+
+        Timestamp date = Timestamp.valueOf(dateTime);
+        Timestamp current = new Timestamp(date.getTime());
+
+        Solution solution2 = new Solution();
+        solution2.setCreated(date);
+        solution2.setUpdated(date);
+        solution2.setDescription("very nice solution");
+        solution2.setExercise(ExerciseDao.getById(6));
+        solution2.setUsers(UserDao.getById(4));
+
+//        for (int i = 1; i <=all.size() ; i++) {
+//            if(ExerciseDao.getById(i) != null){
+//                solution2.setExercise(ExerciseDao.getById(i));
+//                break;
+//            }
+//        }
+//        for (int i = 1; i <=all.size() ; i++) {
+//            if(UserDao.getById(i) != null){
+//                solution2.setUsers(UserDao.getById(i));
+//                break;
+//            }
+//        }
+        SolutionDao.save(solution2);
+
 
     }
 }
