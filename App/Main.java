@@ -227,13 +227,22 @@ public class Main {
 //            }
 //        }
       //  SolutionDao.save(solution2);
-        Users currentUser = new Users();
-        currentUser.setId(10);
-        currentUser.setUserName("ainowy");
-        currentUser.setEmail("hetman@gmail.com");
-        currentUser.setPassword("kasiaczek");
-        currentUser.setUserGroup(UserGroupDao.getById(2));
-        UserDao.save(currentUser);
+//        Users currentUser = new Users();
+//        currentUser.setId(10);
+//        currentUser.setUserName("ainowy");
+//        currentUser.setEmail("hetman@gmail.com");
+//        currentUser.setPassword("kasiaczek");
+//        currentUser.setUserGroup(UserGroupDao.getById(2));
+//        UserDao.save(currentUser);
+
+        List<String[]> allByUserId = SolutionDao.findAllByUserId(4);
+        DbServicePs.printList(allByUserId);
+        System.out.println("++++++++++++++");
+        List<String[]> allByExerciseId = SolutionDao.findAllByExerciseId(6);
+        DbServicePs.printList(allByExerciseId);
+        System.out.println("+++++++++++++++");
+        List<String[]> allByGroupId = SolutionDao.findAllByGroupId(2);
+        DbServicePs.printList(allByGroupId);
 
 
     }

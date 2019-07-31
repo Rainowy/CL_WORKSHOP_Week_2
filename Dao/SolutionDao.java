@@ -107,4 +107,26 @@ public class SolutionDao {
         tmp.setExercise(ExerciseDao.getById(Integer.valueOf(firstRow[4])));
         tmp.setUsers(UserDao.getById(Integer.valueOf(firstRow[5])));
     }
+
+    public static List<String[]> findAllByUserId (int id){
+        String query = "select created, updated, description from solution where users_id=?";
+        String [] params = {String.valueOf(id)};
+        List<String[]> data = DbServicePs.getData(query, params);
+        return data;
+    }
+
+    public static List<String[]> findAllByExerciseId (int id) {
+        String query = "select created, updated, description from solution where exercise_id = ? group by updated desc";
+        String [] params = {String.valueOf(id)};
+        List<String[]> data = DbServicePs.getData(query, params);
+        return data;
+    }
+
+    public static List<String[]> findAllByGroupId (int id){
+        String query = "select username,email,password from users where user_group_id = ?";
+        String [] params = {String.valueOf(id)};
+        List<String[]> data = DbServicePs.getData(query, params);
+        return data;
+    }
+
 }
