@@ -1,18 +1,18 @@
 package App;
 
-import Dao.UserDao;
 import Dao.UserGroupDao;
-import Entity.Users;
+import Entity.Exercise;
+import Entity.UserGroup;
 import Services.DbServicePs;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class UserManagement {
+public class UserGroupManagement {
     static Scanner scan = new Scanner(System.in);
 
-    public static void printAllUsers() {
-        String query = "Select * from users;";
+    public static void printAllUserGroups() {
+        String query = "Select * from user_group;";
         List<String[]> data = DbServicePs.getData(query, null);
         DbServicePs.printList(data);
     }
@@ -25,13 +25,13 @@ public class UserManagement {
             answer = scan.next();
             switch (answer) {
                 case "add":
-                    addUser();
+                    addUserGroup();
                     break;
                 case "edit":
-                    editUser();
+                    editUserGroup();
                     break;
                 case "delete":
-                    deleteUser();
+                    deleteUserGroup();
                     break;
             }
             if ((answer.equalsIgnoreCase("quit"))) {
@@ -48,49 +48,37 @@ public class UserManagement {
 
     }
 
-    private static void addUser() {
-        System.out.println("Dodaj nowego użytkownika: ");
-        Users newUser = new Users();
-        setUserData(newUser);
-        System.out.println("DODANO UŻYTKOWNIKA");
+    private static void addUserGroup() {
+        System.out.println("Dodaj nową grupę: ");
+        setUserGroupData();
+        System.out.println("DODANO GRUPĘ");
     }
 
-    private static void editUser() {
-        System.out.println("Zmodyfikuj istniejącego użytkownika");
-        System.out.println("Podaj Id użytkownika");
-        Users newUser = new Users();
-        newUser.setId(validateId());
-        setUserData(newUser);
-        System.out.println("ZMODYFIKOWANO UŻYTKOWNIKA");
+    private static void setUserGroupData() {
+        scan.nextLine();
+        // UserGroup newUserGroup = new UserGroup();
+        System.out.println("Wprowadź nazwę");
+        String nazwa = scan.next();
+        UserGroup newUserGroup = new UserGroup(nazwa);
+        UserGroupDao.save(newUserGroup);
     }
 
-    private static void setUserData(Users newUser) {
-        System.out.println("Wprowadź imię");
-        newUser.setUserName(scan.next());
-        System.out.println("Wprowadź email");
-        newUser.setEmail(scan.next());
-        System.out.println("Wprowadź hasło");
-        newUser.setPassword(scan.next());
-        int id;
-        do {
-            System.out.println("Wprowadź numer grupy: 1 = Admin, 2 = User");
-            while (!scan.hasNextInt()) {
-                scan.next();
-                System.out.println("to nie jest numer");
-            }
-            id = scan.nextInt();
-        }
-        while (id != 1 && id != 2);
-        newUser.setUserGroup(UserGroupDao.getById(id));
-        UserDao.save(newUser);
+    private static void setUserGroupData(int id) {
+        scan.nextLine();
+        // UserGroup newUserGroup = new UserGroup();
+        System.out.println("Wprowadź nazwę");
+        String nazwa = scan.next();
+        UserGroup newUserGroup = new UserGroup(id, nazwa);
+        UserGroupDao.save(newUserGroup);
     }
 
-    private static void deleteUser() {
-        System.out.println("Skasuj użytkownika o podanym ID");
-        String query = "delete from users where id =?;";
-        String[] params = {String.valueOf(validateId())};
-        DbServicePs.executeQuery(query, params);
-        System.out.println("USUNIĘTO UŻYTKOWNIKA");
+    private static void editUserGroup() {
+        System.out.println("Zmodyfikuj istniejącą grupę");
+        System.out.println("Podaj Id grupy");
+        // UserGroup newUserGroup = new UserGroup();
+        setUserGroupData(validateId());
+        System.out.println("ZMODYFIKOWANO GRUPĘ");
+
     }
 
     private static int validateId() {
@@ -102,7 +90,7 @@ public class UserManagement {
             }
             dbId = scan.nextInt();
             if (!idExistorNot(dbId)) {
-                System.out.println("Nie ma użytkownika o podanym Id w bazie");
+                System.out.println("Nie ma grupy o podanym Id w bazie");
             }
         }
         while (!idExistorNot(dbId));
@@ -110,7 +98,7 @@ public class UserManagement {
     }
 
     public static boolean idExistorNot(int id) {
-        String query = "select id from users;";
+        String query = "select id from user_group;";
         List<String[]> data = DbServicePs.getData(query, null);
         boolean answer = false;
         for (String[] s : data) {
@@ -121,4 +109,13 @@ public class UserManagement {
         }
         return answer;
     }
+
+    private static void deleteUserGroup() {
+        System.out.println("Skasuj grupę o podanym ID");
+        String query = "delete from user_group where id =?;";
+        String[] params = {String.valueOf(validateId())};
+        DbServicePs.executeQuery(query, params);
+        System.out.println("USUNIĘTO GRUPĘ");
+    }
+
 }

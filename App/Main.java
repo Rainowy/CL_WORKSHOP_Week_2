@@ -25,18 +25,27 @@ public class Main {
     public static void main(String[] args) {
 
 
-
         /** USER MANAGEMENT **/
-        Scanner scan = new Scanner(System.in);
+        //
 
-        //Print all users
-        UserManagement.printAllUsers();
-        System.out.println();
-        //Manage Users
-        UserManagement.management();
+//        //Print all users
+//        UserManagement.printAllUsers();
+//        System.out.println();
+//        //Manage Users
+//        UserManagement.management();
 
-        //System.out.println(UserManagement.idExistorNot(10));
 
+        /**EXERCISE MANAGEMENT**/
+//        //Print all users
+//        ExerciseManagement.printAllUsers();
+//        System.out.println();
+//        Manage Exercise
+        //        ExerciseManagement.management();
+
+        /** USER_GROUP MANAGEMENT **/
+
+        UserGroupManagement.printAllUserGroups();
+        UserGroupManagement.management();
 
     }
 }

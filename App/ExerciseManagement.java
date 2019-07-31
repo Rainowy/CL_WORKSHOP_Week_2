@@ -1,18 +1,17 @@
 package App;
 
-import Dao.UserDao;
-import Dao.UserGroupDao;
-import Entity.Users;
+import Dao.ExerciseDao;
+import Entity.Exercise;
 import Services.DbServicePs;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class UserManagement {
+public class ExerciseManagement extends UserManagement {
     static Scanner scan = new Scanner(System.in);
 
     public static void printAllUsers() {
-        String query = "Select * from users;";
+        String query = "Select * from exercise;";
         List<String[]> data = DbServicePs.getData(query, null);
         DbServicePs.printList(data);
     }
@@ -25,13 +24,13 @@ public class UserManagement {
             answer = scan.next();
             switch (answer) {
                 case "add":
-                    addUser();
+                    addExercise();
                     break;
                 case "edit":
-                    editUser();
+                    editExercise();
                     break;
                 case "delete":
-                    deleteUser();
+                    deleteExercise();
                     break;
             }
             if ((answer.equalsIgnoreCase("quit"))) {
@@ -41,56 +40,45 @@ public class UserManagement {
             } else {
                 System.out.println("Wybierz jedną z opcji: 'add', 'edit', 'delete', 'quit'");
             }
-
-            scan.nextLine();    //TO JEST WAŻNE, KASUJE POPRZEDNI SCAN
+            //scan.nextLine();    //TO JEST WAŻNE, KASUJE POPRZEDNI SCAN
+            //wydaje się, że scan.nextLine() jest potrzebne gdy wcześniejsze skanowanie było wykonane za pomocą scan.next() wtedy ono kasuje nadmiarowy wpis, natomiast gdy ostatnie jest scan.nextLine() to nie trzeba go znowu używać
         }
         while (!answer.equalsIgnoreCase("quit"));
 
     }
 
-    private static void addUser() {
-        System.out.println("Dodaj nowego użytkownika: ");
-        Users newUser = new Users();
-        setUserData(newUser);
-        System.out.println("DODANO UŻYTKOWNIKA");
+    private static void addExercise() {
+        System.out.println("Dodaj nowe zadanie: ");
+        Exercise newExercise = new Exercise();
+        setExerciseData(newExercise);
+        System.out.println("DODANO ZADANIE");
     }
 
-    private static void editUser() {
-        System.out.println("Zmodyfikuj istniejącego użytkownika");
-        System.out.println("Podaj Id użytkownika");
-        Users newUser = new Users();
-        newUser.setId(validateId());
-        setUserData(newUser);
-        System.out.println("ZMODYFIKOWANO UŻYTKOWNIKA");
+    private static void setExerciseData(Exercise newExercise) {
+        scan.nextLine();
+        System.out.println("Wprowadź tytuł");
+        newExercise.setTitle(scan.nextLine());
+        System.out.println("Wprowadź opis");
+        newExercise.setDescription(scan.nextLine());
+        ExerciseDao.save(newExercise);
     }
 
-    private static void setUserData(Users newUser) {
-        System.out.println("Wprowadź imię");
-        newUser.setUserName(scan.next());
-        System.out.println("Wprowadź email");
-        newUser.setEmail(scan.next());
-        System.out.println("Wprowadź hasło");
-        newUser.setPassword(scan.next());
-        int id;
-        do {
-            System.out.println("Wprowadź numer grupy: 1 = Admin, 2 = User");
-            while (!scan.hasNextInt()) {
-                scan.next();
-                System.out.println("to nie jest numer");
-            }
-            id = scan.nextInt();
-        }
-        while (id != 1 && id != 2);
-        newUser.setUserGroup(UserGroupDao.getById(id));
-        UserDao.save(newUser);
+    private static void editExercise() {
+        System.out.println("Zmodyfikuj istniejące zadanie");
+        System.out.println("Podaj Id zadania");
+        Exercise newExercise = new Exercise();
+        newExercise.setId(validateId());
+        setExerciseData(newExercise);
+        System.out.println("ZMODYFIKOWANO ZADANIE");
+
     }
 
-    private static void deleteUser() {
-        System.out.println("Skasuj użytkownika o podanym ID");
-        String query = "delete from users where id =?;";
+    private static void deleteExercise() {
+        System.out.println("Skasuj zadanie o podanym ID");
+        String query = "delete from exercise where id =?;";
         String[] params = {String.valueOf(validateId())};
         DbServicePs.executeQuery(query, params);
-        System.out.println("USUNIĘTO UŻYTKOWNIKA");
+        System.out.println("USUNIĘTO ZADANIE");
     }
 
     private static int validateId() {
@@ -102,7 +90,7 @@ public class UserManagement {
             }
             dbId = scan.nextInt();
             if (!idExistorNot(dbId)) {
-                System.out.println("Nie ma użytkownika o podanym Id w bazie");
+                System.out.println("Nie ma zadania o podanym Id w bazie");
             }
         }
         while (!idExistorNot(dbId));
@@ -110,7 +98,7 @@ public class UserManagement {
     }
 
     public static boolean idExistorNot(int id) {
-        String query = "select id from users;";
+        String query = "select id from exercise;";
         List<String[]> data = DbServicePs.getData(query, null);
         boolean answer = false;
         for (String[] s : data) {
@@ -121,4 +109,5 @@ public class UserManagement {
         }
         return answer;
     }
+
 }
