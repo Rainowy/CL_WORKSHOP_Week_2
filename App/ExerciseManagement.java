@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ExerciseManagement extends UserManagement {
     static Scanner scan = new Scanner(System.in);
 
-    public static void printAllUsers() {
+    public static void printAllExercises() {
         String query = "Select * from exercise;";
         List<String[]> data = DbServicePs.getData(query, null);
         DbServicePs.printList(data);
@@ -81,7 +81,7 @@ public class ExerciseManagement extends UserManagement {
         System.out.println("USUNIĘTO ZADANIE");
     }
 
-    private static int validateId() {
+    public static int validateId() {
         int dbId;
         do {
             while (!scan.hasNextInt()) {

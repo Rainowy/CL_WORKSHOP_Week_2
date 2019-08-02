@@ -12,7 +12,7 @@ public class ExerciseDao {
         if (exercise.getId() == 0) {
             saveToDb(exercise);
         } else {
-             updateInDb(exercise);
+            updateInDb(exercise);
         }
     }
 
@@ -55,6 +55,7 @@ public class ExerciseDao {
         }
         return tmp;
     }
+
     private static List<Exercise> getAllExercises(List<String[]> list) {
         List<Exercise> result = new ArrayList<>();
         for (String[] firstRow : list) {
@@ -66,28 +67,41 @@ public class ExerciseDao {
         }
         return result;
     }
-    public static void updateInDb(Exercise exercise){
+
+    public static void updateInDb(Exercise exercise) {
         String query = "update exercise set title = ?, description=? where id =?;";
-        String [] params = new String[3];
+        String[] params = new String[3];
         params[0] = exercise.getTitle();
         params[1] = exercise.getDescription();
         params[2] = String.valueOf(exercise.getId());
-        DbServicePs.executeQuery(query,params);
+        DbServicePs.executeQuery(query, params);
 
     }
-    public static void delete(Exercise exercise){
+
+    public static void delete(Exercise exercise) {
         String query = "delete from exercise where id=?;";
         String[] params = {String.valueOf(exercise.getId())};
-        DbServicePs.executeQuery(query,params);
+        DbServicePs.executeQuery(query, params);
     }
-    public static void delete(int id){
+
+    public static void delete(int id) {
         delete(ExerciseDao.getById(id));
     }
 
-    public static List<Exercise> getAll(){
+    public static List<Exercise> getAll() {
         String query = "select * from exercise;";
         List<String[]> data = DbServicePs.getData(query, null);
         return getAllExercises(data);
     }
 
+    public static List<String[]> loadExcluded(int userId) {
+        String query = "select distinct e.* from exercise e where not exists (\n" +
+                "    select * from exercise e2 join solution s on e2.id = s.exercise_id where e2.id=e.id and s.users_id =?\n" +
+                "    )";
+        String [] params = {String.valueOf(userId)};
+        List<String[]> data = DbServicePs.getData(query, params);
+
+        return data;
+
+    }
 }

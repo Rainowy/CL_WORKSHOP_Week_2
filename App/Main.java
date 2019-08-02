@@ -24,9 +24,26 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("Hello World");
+//        int userId =4;
+//
+//        List<Integer> doneExercise = new ArrayList<>();
+//
+//        String query = "select exercise_id, title from solution join exercise e on solution.exercise_id = e.id where users_id =?;";
+//        String [] params= {String.valueOf(userId)};
+//        List<String[]> data = DbServicePs.getData(query, params);
+//        for(String[] s : data){
+//            doneExercise.add(Integer.valueOf(s[0]));
+//        }
+//        System.out.println(doneExercise);
 
-        /** USER MANAGEMENT **/
-        //
+        // if(args == null){
+
+    }
+
+
+    /** USER MANAGEMENT **/
+    //
 
 //        //Print all users
 //        UserManagement.printAllUsers();
@@ -35,17 +52,18 @@ public class Main {
 //        UserManagement.management();
 
 
-        /**EXERCISE MANAGEMENT**/
+    /**EXERCISE MANAGEMENT**/
 //        //Print all users
 //        ExerciseManagement.printAllUsers();
 //        System.out.println();
 //        Manage Exercise
-        //        ExerciseManagement.management();
+    //        ExerciseManagement.management();
 
-        /** USER_GROUP MANAGEMENT **/
+    /** USER_GROUP MANAGEMENT **/
 
-        UserGroupManagement.printAllUserGroups();
-        UserGroupManagement.management();
+//        UserGroupManagement.printAllUserGroups();
+//        UserGroupManagement.management();
+    //  SolutionManagement.management();
 
-    }
 }
+

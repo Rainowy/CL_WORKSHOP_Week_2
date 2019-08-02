@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CL_WORKSHOP_Week_2:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/CL_WORKSHOP_Week_2_jar2</output-path>
+    <root id="archive" name="CL_WORKSHOP_Week_2.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/../META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="CL_WORKSHOP_Week_2" />
+      <element id="extracted-dir" path="$USER_HOME$/Java jar/mysql-connector-java-8.0.16.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Java jar/jbcrypt-0.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

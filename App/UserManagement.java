@@ -93,7 +93,7 @@ public class UserManagement {
         System.out.println("USUNIĘTO UŻYTKOWNIKA");
     }
 
-    private static int validateId() {
+    public static int validateId() {
         int dbId;
         do {
             while (!scan.hasNextInt()) {

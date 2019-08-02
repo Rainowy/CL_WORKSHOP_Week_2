@@ -47,6 +47,7 @@ public class SolutionDao {
 
         return tmp;
     }
+
     public static Solution getByname(String name) {
         String query = "select * from solution where description like ?";
         String[] params = {"%" + name + "%"};
@@ -62,9 +63,9 @@ public class SolutionDao {
         String[] params = new String[6];
         InsertParams(solution, params);
         params[5] = String.valueOf(solution.getId());
-        System.out.println(Arrays.toString(params));
         DbServicePs.executeQuery(query, params);
     }
+
     private static void InsertParams(Solution solution, String[] params) {
         params[0] = String.valueOf(solution.getCreated());
         params[1] = String.valueOf(solution.getUpdated());
@@ -76,18 +77,20 @@ public class SolutionDao {
     public static void delete(Solution solution) {
         String query = "delete from solution where id =?";
         String[] params = {String.valueOf(solution.getId())};
-        DbServicePs.executeQuery(query,params);
+        DbServicePs.executeQuery(query, params);
     }
-    public static void delete(int id){
+
+    public static void delete(int id) {
         Solution byId = SolutionDao.getById(id);
         delete(byId);
     }
-    public static List<Solution> getAll(){
+
+    public static List<Solution> getAll() {
         String query = "select * from solution;";
         List<String[]> data = DbServicePs.getData(query, null);
         List<Solution> result = new ArrayList<>();
-        if(data.size() > 0){
-            for(String[] firstRow: data){
+        if (data.size() > 0) {
+            for (String[] firstRow : data) {
                 Solution tmp = new Solution();
                 setObject(firstRow, tmp);
                 result.add(tmp);
@@ -108,25 +111,26 @@ public class SolutionDao {
         tmp.setUsers(UserDao.getById(Integer.valueOf(firstRow[5])));
     }
 
-    public static List<String[]> findAllByUserId (int id){
+    public static List<String[]> findAllByUserId(int id) {
         String query = "select created, updated, description from solution where users_id=?";
-        String [] params = {String.valueOf(id)};
+        String[] params = {String.valueOf(id)};
         List<String[]> data = DbServicePs.getData(query, params);
         return data;
     }
 
-    public static List<String[]> findAllByExerciseId (int id) {
+    public static List<String[]> findAllByExerciseId(int id) {
         String query = "select created, updated, description from solution where exercise_id = ? group by updated desc";
-        String [] params = {String.valueOf(id)};
+        String[] params = {String.valueOf(id)};
         List<String[]> data = DbServicePs.getData(query, params);
         return data;
     }
 
-    public static List<String[]> findAllByGroupId (int id){
+    public static List<String[]> findAllByGroupId(int id) {
         String query = "select username,email,password from users where user_group_id = ?";
-        String [] params = {String.valueOf(id)};
+        String[] params = {String.valueOf(id)};
         List<String[]> data = DbServicePs.getData(query, params);
         return data;
     }
+
 
 }
